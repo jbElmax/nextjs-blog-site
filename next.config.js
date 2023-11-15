@@ -1,14 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+//const nextConfig = {}
 
-module.exports = nextConfig
-// module.exports = {
-//     webpack(config) {
-//       config.module.rules.push({
-//         test: /\.svg$/,
-//         use: ["@svgr/webpack"]
-//       });
+module.exports = {
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'source.unsplash.com',
+
+        },
+      ],
+    },
+  }
   
-//       return config;
-//     }
-//   };
