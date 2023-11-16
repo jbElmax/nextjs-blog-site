@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navigation/>
-        <main className='ml-[150px] mr-[150px]'>
+        <main className='lg:ml-[150px] lg:mr-[150px] pb-[20px]'>
         {children}
         </main>
       </body>
