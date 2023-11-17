@@ -3,12 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { usePathname } from "next/navigation";
+import { useUser } from "@/app/context/user.context";
 
 
 const Navigation = ()=>{
     const pathname = usePathname();
+    const { user } = useUser();
     return(
-        <div className="flex lg:flex-row flex-col justify-between shadow-md py-4 bg-amber-100 place-items-center pl-[150px] pr-[150px]">
+        <div className="flex lg:flex-row flex-col justify-between shadow-md py-4 bg-amber-100 place-items-center pl-[150px] pr-[150px] fixed top-0 w-full">
             <div className="flex gap-x-2 place-items-center lg:flex-row flex-col">
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -40,9 +42,19 @@ const Navigation = ()=>{
                     <li className="px-2">
                         <Link href="/" className="hover:text-amber-500">Contact</Link>
                     </li>
+                    {user ? (
                     <li className="px-2">
-                        <Link href="/auth" className={`hover:text-amber-500 ${pathname ==='/auth' ? 'text-amber-600 border-b-2 border-amber-200':'text-gray-700' }`}>Auth</Link>
+                        <Link href="/dashboard" className={`hover:text-amber-500 ${pathname === '/dashboard' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>
+                            Dashboard
+                        </Link>
                     </li>
+                ) : (
+                    <li className="px-2">
+                        <Link href="/auth" className={`hover:text-amber-500 ${pathname === '/auth' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>
+                            Auth
+                        </Link>
+                    </li>
+                )}
                 </ul>
             </nav>
         </div>
