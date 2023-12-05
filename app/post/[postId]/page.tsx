@@ -4,7 +4,7 @@ import { useEffect,useState } from "react";
 import { fetchPostDetail } from "@/app/utils/api";
 import Image from "next/image";
 import Link from "next/link";
-
+import 'react-quill/dist/quill.snow.css';
 interface Tag{
     _id:string;
     name:string;
@@ -17,8 +17,6 @@ interface DetailedPost {
     _id:string;
     title:string;
     content:string;
-    conclusion:string;
-    introduction:string;
     image:string;
     author:Author;
     createdAt:string;
@@ -65,12 +63,7 @@ const PostDetail = ()=>{
                     </ul>
                     <h1 className="text-2xl text-center font-medium text-gray-800 mt-[15px]">{blogPost.title}</h1>
 
-                    <h2 className="text-lg mt-[20px] font-medium">Introduction</h2>
-                    <p className="mt-[5px] text-justify">{blogPost.introduction}</p>
-                    <h2 className="text-lg mt-[10px] font-medium">Body</h2>
-                    <p className="mt-[10px] text-justify">{blogPost.content}</p>
-                    <h2 className="text-lg mt-[10px] font-medium">Conclusion</h2>
-                    <p className="text-justify mt-[5px]">{blogPost.conclusion}</p>
+                    <div dangerouslySetInnerHTML={{ __html: blogPost.content }} />
                     <div className="flex place-items-center justify-between"><p className="text-green-500 hover:cursor-pointer hover:underline">Share</p><p className="float-right text-orange-500 mt-[10px] mb-[10px] hover:cursor-pointer hover:underline">Post a comment</p></div>
                 </div>
             )}

@@ -18,6 +18,27 @@
 
 body {
   color: black;
-  background: #fff;
+  /* background: #fff; */
 
 }
+@media (min-width:320px){
+  .quill{
+    height: 150px;
+    margin-bottom: 60px;
+  }
+  
+} 
+
+.quill{
+  height: 200px;
+  margin-bottom: 40px;
+  border-radius: 5px;
+}
+.ql-toolbar.ql-snow{
+  border-radius: 5px;
+}
+
+.ql-container.ql-snow{
+  border-radius: 5px;
+}
+

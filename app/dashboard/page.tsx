@@ -15,15 +15,40 @@ const Dashboard = ()=>{
     console.log(user);
     const [postBlogs, setPostBlogs] = useState<Blog[]>([]);
 
+    const fetchData = async()=>{
+        const data = await fetchAllPostOfUser(user._id);
+        setPostBlogs(data ?? []);
+      };
+
     useEffect(()=>{
-        const fetchData = async()=>{
-          const data = await fetchAllPostOfUser(user._id);
-          setPostBlogs(data ?? []);
-        };
-    
+
         fetchData();
     
-      },[user._id])
+      },[])
+
+    async function deletePost(postId:string){
+        const userConfirmed = confirm("Are you sure to delete post?");
+        if(userConfirmed){
+            try{
+                const response =await fetch(`http://localhost:8000/api/blog/${postId}`,{
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    
+                })
+                if(response.ok){
+                    
+                    alert('Post successfully deleted.')
+                    fetchData();
+                }else{
+                    alert('Unable to delete the post.')
+                }
+            }catch(error){
+               console.log(error); 
+            }
+        }
+    }
     return(
         <div className='lg:mt-[0px] mt-[310px] px-2'>
         <div className='flex justify-between text-gray-700'>
@@ -31,7 +56,7 @@ const Dashboard = ()=>{
         </div>
         <div className='flex flex-col'>
             
-            <div><Link href={'/new-post'} className='rounded border border-gray-400 text-gray-800 bg-orange-300 px-2 py-2 float-right mt-[15px] hover:bg-orange-400'>Create Post</Link></div>
+            <div><Link href={'/new-post'} className='rounded border shadow-md border-green-400 text-gray-800 px-2 py-2 float-right mt-[15px] hover:bg-orange-200'>Create Post</Link></div>
             <div>
             <h2 className='text-gray-700 text-lg mt-[10px] font-medium'>Your Post</h2>
                 {postBlogs.length > 0 ? (
@@ -42,7 +67,7 @@ const Dashboard = ()=>{
                         <Image src={blog.image} alt='post image' width={450} height={200} className='w-full h-[200px] object-cover rounded'/>
                         <h2 className='text-2xl text-gray-800 font-medium mt-[5px]'>{blog.title}</h2>
                         
-                        <div className='justify-between flex mt-[10px] place-items-center'><p className='text-red-500 hover:cursor-pointer hover:underline'>Delete</p><Link href={`/post/${blog._id}`} className='float-right text-green-600 mt-[10px] hover:cursor-pointer hover:underline'>Edit</Link></div>
+                        <div className='justify-between flex mt-[10px] place-items-center'><p className='text-red-500 hover:cursor-pointer hover:underline' onClick={()=>deletePost(blog._id)}>Delete</p><Link href={`/edit-post/${blog._id}`} className='float-right text-green-600 mt-[10px] hover:cursor-pointer hover:underline'>Edit</Link></div>
                         </div>
                     ))}
                     </div>

@@ -67,3 +67,36 @@ export const fetchCategories = async()=>{
         return null;
     }
 }
+
+export const fetchCategoryByName = async(categoryName)=>{
+    const apiUrl = `http://localhost:8000/api/category/getCategory/${categoryName}`
+    try{
+        const response = await fetch(apiUrl);
+
+        if(!response.ok){
+            console.log('network response not ok');
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error){
+        console.log(error);
+        return null;
+    }
+}
+export const fetchPostByCategoryId = async(categoryId)=>{
+    const apiUrl = `http://localhost:8000/api/blog/category/${categoryId}`
+    try{
+        const response = await fetch(apiUrl);
+
+        if(!response.ok){
+            console.log('network response not ok');
+        }
+
+        const data = await response.json();
+        return data;
+    }catch(error){
+        console.log(error);
+        return null;
+    }
+}
