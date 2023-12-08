@@ -41,4 +41,11 @@ body {
 .ql-container.ql-snow{
   border-radius: 5px;
 }
+.custom pre{
+  background-color: #23241f;
+  color: #f8f8f2;
+  overflow: visible;
+  padding-right: 10px;
+  padding-left: 10px;
+}
 

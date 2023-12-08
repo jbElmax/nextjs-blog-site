@@ -54,16 +54,16 @@ const PostDetail = ()=>{
                         <Link href = "/" className="text-green-600"> Back</Link>
                     </div>
                     
-                    <Image src = {blogPost.image} alt="post image" width={350} height={200} className="w-full h-[200px] object-cover rounded mt-[15px]"/>
+                    <Image src = {blogPost.image} alt="post image" width={350} height={200} className="w-full h-[200px] object-cover rounded mt-[20px]"/>
                     <div className="flex lg:flex-row flex-col justify-between mt-[10px]"><p className="text-sm text-gray-600 mt-[5px]">Author:{blogPost.author.username}</p><p className="text-sm mt-[5px] text-gray-600">Publish At:  {formatDateString(blogPost.createdAt)}</p></div>
                     <ul className="flex flex-row text-sm text-gray-600 mt-[3px]">Tags:
                         {blogPost.tags.map((tag) => (
                         <li key={tag._id}>{tag.name}</li>
                         ))}
                     </ul>
-                    <h1 className="text-2xl text-center font-medium text-gray-800 mt-[15px]">{blogPost.title}</h1>
+                    <h1 className="text-2xl text-center font-medium text-gray-800 mt-[15px] mb-[15px]">{blogPost.title}</h1>
 
-                    <div dangerouslySetInnerHTML={{ __html: blogPost.content }} />
+                    <div className="custom" dangerouslySetInnerHTML={{ __html: blogPost.content }} />
                     <div className="flex place-items-center justify-between"><p className="text-green-500 hover:cursor-pointer hover:underline">Share</p><p className="float-right text-orange-500 mt-[10px] mb-[10px] hover:cursor-pointer hover:underline">Post a comment</p></div>
                 </div>
             )}
