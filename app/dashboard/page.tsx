@@ -65,7 +65,7 @@ const Dashboard = ()=>{
                     {postBlogs.map((blog) => (
                         <div key={blog._id} className='lg:w-[400px] w-[350px] px-4 py-4 rounded'>
                         <Image src={blog.image} alt='post image' width={450} height={200} className='w-full h-[200px] object-cover rounded'/>
-                        <h2 className='text-2xl text-gray-800 font-medium mt-[5px]'>{blog.title}</h2>
+                        <h2 className='text-2xl text-gray-800 font-medium mt-[15px]'>{blog.title}</h2>
                         
                         <div className='justify-between flex mt-[10px] place-items-center'><p className='text-red-500 hover:cursor-pointer hover:underline' onClick={()=>deletePost(blog._id)}>Delete</p><Link href={`/edit-post/${blog._id}`} className='float-right text-green-600 mt-[10px] hover:cursor-pointer hover:underline'>Edit</Link></div>
                         </div>

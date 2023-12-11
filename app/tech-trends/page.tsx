@@ -9,8 +9,8 @@ interface Blog {
     content: string;
     image:string;
   }
-const Articles = ()=>{
-    const categoryName = 'Articles'
+const TechTrends = ()=>{
+    const categoryName = 'Tech Trends'
     const[categoryId,setCategoryId] = useState(''); 
     const[articles,setArticles] = useState<Blog[]>([]);
     const extractFirst50Words = (content:string) => {
@@ -35,7 +35,7 @@ const Articles = ()=>{
     },[])
     return(
         <div>
-            <h1 className="text-2xl font-medium text-center text-gray-700">Articles</h1>
+            <h1 className="text-2xl font-medium text-center text-gray-700">Tech Trends</h1>
             
                 {articles.length > 0 ?(
                     <div className="grid grid-cols-1 mx-auto lg:w-[650px] md:w-[450px] w-[350px] mt-[10px]">
@@ -57,4 +57,4 @@ const Articles = ()=>{
     )
 }
 
-export default Articles;
+export default TechTrends;

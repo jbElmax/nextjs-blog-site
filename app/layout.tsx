@@ -23,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <UserProvider>
           <Navigation/>
-          <main className='lg:ml-[150px] lg:mr-[150px] mx-auto pb-[20px] lg:mt-[90px] mt-[270px]'>
+          <main className='lg:ml-[150px] lg:mr-[150px] mx-auto pb-[20px] lg:mt-[100px] mt-[360px]'>
           {children}
           </main>
         </UserProvider>
