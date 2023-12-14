@@ -123,7 +123,7 @@ const NewPost = ()=>{
                     </div>
                     <label className="mt-[10px]">Tags</label>
                     <input onChange={onChangeHandler} name='tagstr' type="text" placeholder="Enter tags separated by commas" className="border-2 border-gray-300 rounded px-2 py-2 focus:outline-none focus:ring focus:ring-orange-300 mt-[10px]"/>
-                    <button type="submit" className="border border-orange-300 px-2 py-2 bg-orange-400 mt-[20px] rounded hover:bg-orange-500">Publish</button>
+                    <button type="submit" className="border text-white border-orange-300 px-2 py-2 bg-orange-400 mt-[20px] rounded hover:bg-orange-500">Publish</button>
                 </div>
     
             </form>

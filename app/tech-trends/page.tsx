@@ -3,6 +3,8 @@ import { useState,useEffect } from "react";
 import { fetchCategoryByName, fetchPostByCategoryId } from "../utils/api";
 import Image from "next/image";
 import Link from "next/link";
+import Card from "../components/card/card.component";
+import Loading from "../components/loading/loading";
 interface Blog {
     _id: string;
     title: string;
@@ -41,17 +43,12 @@ const TechTrends = ()=>{
                     <div className="grid grid-cols-1 mx-auto lg:w-[650px] md:w-[450px] w-[350px] mt-[10px]">
                         {articles.map((article)=>{
                             return(
-                                <div key={article._id} className='px-4 py-4 rounded'>
-                                    <Image src={article.image} alt='post image' width={450} height={200} className='w-full h-[200px] object-cover rounded'/>
-                                    <h2 className='text-2xl text-gray-800 font-medium mt-[15px] mb-[15px]'>{article.title}</h2>
-                                    <div className="custom" dangerouslySetInnerHTML={{ __html: extractFirst50Words(article.content) }} ></div>...
-                                    <div className='justify-between flex mt-[10px] place-items-center'><p className='text-green-600 hover:cursor-pointer hover:underline text-sm'>Share</p><Link href={`/post/${article._id}`} className='float-right text-orange-500 mt-[10px] hover:cursor-pointer hover:underline text-sm'>Read More</Link></div>
-                              </div>
+                                <Card key={article._id} className="px-4 py-4 rounded" {...article}/>
                             )
                         })}
                     </div>
                  
-                ):(<p className='text-center text-2xl font-medium mt-[15px] text-gray-600'>Loading...</p>) }
+                ):(<Loading/>) }
          
         </div>
     )

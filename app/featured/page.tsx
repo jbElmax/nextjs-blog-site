@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import {fetchFeaturedBlog } from "../utils/api";
 import Image from "next/image";
 import Link from "next/link";
+import Card from "../components/card/card.component";
 interface Blog {
     _id: string;
     title: string;
@@ -34,12 +35,13 @@ const Articles = ()=>{
                     <div className="grid grid-cols-1 mx-auto lg:w-[650px] md:w-[450px] w-[350px] mt-[10px]">
                         {featuredBlogs.map((blog)=>{
                             return(
-                                <div key={blog._id} className='px-4 py-4 rounded'>
-                                    <Image src={blog.image} alt='post image' width={450} height={200} className='w-full h-[200px] object-cover rounded'/>
-                                    <h2 className='text-2xl text-gray-800 font-medium mt-[15px] mb-[15px]'>{blog.title}</h2>
-                                    <div className="custom" dangerouslySetInnerHTML={{ __html: extractFirst50Words(blog.content) }} ></div>...
-                                    <div className='justify-between flex mt-[10px] place-items-center'><p className='text-green-600 hover:cursor-pointer hover:underline text-sm'>Share</p><Link href={`/post/${blog._id}`} className='float-right text-orange-500 mt-[10px] hover:cursor-pointer hover:underline text-sm'>Read More</Link></div>
-                              </div>
+                            //     <div key={blog._id} className='px-4 py-4 rounded'>
+                            //         <Image src={blog.image} alt='post image' width={450} height={200} className='w-full h-[200px] object-cover rounded'/>
+                            //         <h2 className='text-2xl text-gray-800 font-medium mt-[15px] mb-[15px]'>{blog.title}</h2>
+                            //         <div className="custom" dangerouslySetInnerHTML={{ __html: extractFirst50Words(blog.content) }} ></div>...
+                            //         <div className='justify-between flex mt-[10px] place-items-center'><p className='text-green-600 hover:cursor-pointer hover:underline text-sm'>Share</p><Link href={`/post/${blog._id}`} className='float-right text-orange-500 mt-[10px] hover:cursor-pointer hover:underline text-sm'>Read More</Link></div>
+                            //   </div>
+                            <Card key={blog._id} className="px-4 py-4 rounded" _id={blog._id} image={blog.image} title={blog.title} content={blog.content}/>
                             )
                         })}
                     </div>

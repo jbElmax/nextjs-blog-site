@@ -1,8 +1,9 @@
 'use client'
-import Image from 'next/image'
+
 import { useEffect,useState } from 'react';
 import {fetchCategoryByName,fetchPostByCategoryId} from '../utils/api';
-import Link from 'next/link';
+import Card from '../components/card/card.component';
+import Loading from '../components/loading/loading';
 
 interface Blog {
   _id: string;
@@ -39,18 +40,13 @@ const Tutorials = ()=> {
       <h1 className='text-center text-2xl font-medium mt-[20px] md:mt-[300px] lg:mt-[25px] text-gray-700'>Tutorials</h1>
 
       {articles.length > 0 ? (
-        <div className='grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-4 mx-auto mt-[10px]'>
+        <div className='grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-4 mx-auto mt-[20px] place-items-center'>
           {articles.map((blog) => (
-            <div key={blog._id} className='lg:w-[400px] w-[350px] px-4 py-4 rounded'>
-              <Image src={blog.image} alt='post image' width={450} height={200} className='w-full h-[200px] object-cover rounded'/>
-              <h2 className='text-2xl text-gray-800 font-medium mt-[15px] mb-[15px]'>{blog.title}</h2>
-              <div className="custom" dangerouslySetInnerHTML={{ __html: extractFirst50Words(blog.content) }} ></div>...
-              <div className='justify-between flex mt-[10px] place-items-center'><p className='text-green-600 hover:cursor-pointer hover:underline text-sm'>Share</p><Link href={`/post/${blog._id}`} className='float-right text-orange-500 mt-[10px] hover:cursor-pointer hover:underline text-sm'>Read More</Link></div>
-            </div>
+            <Card key={blog._id} className='lg:w-[400px] w-[350px] px-4 py-4 rounded' {...blog}/>
           ))}
         </div>
       ) : (
-        <p className='text-center text-2xl font-medium mt-[15px] text-gray-600'>Loading...</p>
+        <Loading />
       )}
     </div>
   )
