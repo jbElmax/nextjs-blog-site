@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { useEffect,useState } from 'react';
-import {fetchFeaturedBlog} from './utils/api';
+import {fetchAllPost} from './utils/api';
 import Link from 'next/link';
 
 interface Blog {
@@ -11,7 +11,7 @@ interface Blog {
   image:string;
 }
 const Home = ()=> {
-  const [featuredBlogs, setFeaturedBlogs] = useState<Blog[]>([]);
+  const [allPost, setAllPost] = useState<Blog[]>([]);
   const extractFirst50Words = (content:string) => {
     const words = content.split(' ');
     const first40Words = words.slice(0, 40).join(' ');
@@ -19,8 +19,8 @@ const Home = ()=> {
   };
   useEffect(()=>{
     const fetchData = async()=>{
-      const data = await fetchFeaturedBlog();
-      setFeaturedBlogs(data ?? []);
+      const data = await fetchAllPost();
+      setAllPost(data ?? []);
     };
 
     fetchData();
@@ -28,11 +28,11 @@ const Home = ()=> {
   },[])
   return (
     <div>
-      <h1 className='text-center text-2xl font-medium mt-[20px] md:mt-[300px] lg:mt-[25px] text-gray-700'>Featured Post</h1>
+      <h1 className='text-center text-2xl font-medium mt-[20px] md:mt-[300px] lg:mt-[25px] text-gray-700'>All Articles</h1>
 
-      {featuredBlogs.length > 0 ? (
+      {allPost.length > 0 ? (
         <div className='grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-4 mx-auto mt-[10px]'>
-          {featuredBlogs.map((blog) => (
+          {allPost.map((blog) => (
             <div key={blog._id} className='lg:w-[400px] w-[350px] px-4 py-4 rounded'>
               <Image src={blog.image} alt='post image' width={450} height={200} className='w-full h-[200px] object-cover rounded'/>
               <h2 className='text-2xl text-gray-800 font-medium mt-[15px] mb-[15px]'>{blog.title}</h2>

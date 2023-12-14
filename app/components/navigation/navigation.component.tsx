@@ -26,7 +26,7 @@ const Navigation = ()=>{
                         <Link href="/" className={`hover:text-amber-500 ${pathname ==='/' ? 'text-amber-600 border-b-2 border-amber-200':''}`}>Home</Link>
                     </li>
                     <li className="px-3">
-                        <Link href="/articles" className={`hover:text-amber-500 ${pathname === '/articles' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>Articles</Link>
+                        <Link href="/featured" className={`hover:text-amber-500 ${pathname === '/featured' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>Featured</Link>
                     </li>
                 
                     <li className="px-3">

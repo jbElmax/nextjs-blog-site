@@ -56,7 +56,7 @@ const Dashboard = ()=>{
         </div>
         <div className='flex flex-col'>
             
-            <div><Link href={'/new-post'} className='rounded border shadow-md border-green-400 text-gray-800 px-2 py-2 float-right mt-[15px] hover:bg-orange-200'>Create Post</Link></div>
+            <div><Link href={'/new-post'} className='rounded border shadow-md border-orange-400 text-gray-800 px-2 py-2 float-right mt-[15px] hover:bg-orange-200'>Create Post</Link></div>
             <div>
             <h2 className='text-gray-700 text-lg mt-[10px] font-medium'>Your Post</h2>
                 {postBlogs.length > 0 ? (
@@ -72,7 +72,7 @@ const Dashboard = ()=>{
                     ))}
                     </div>
                     ) : (
-                        <p>Loading...</p>
+                        <p className='text-center text-2xl font-medium mt-[15px] text-gray-600'>Loading...</p>
                     )
                 }
             </div>

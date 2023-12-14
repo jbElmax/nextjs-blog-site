@@ -45,9 +45,9 @@ body {
   background-color: #23241f;
   color: #f8f8f2;
   overflow: visible;
-  padding-right: 10px;
-  padding-left: 10px;
+  padding: 10px;
   margin-top: 15px;
+  font-size: small;
 }
 h2{
   font-size: large;
