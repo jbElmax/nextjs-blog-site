@@ -1,8 +1,8 @@
 'use client'
-import Image from 'next/image'
+
 import { useEffect,useState } from 'react';
 import {fetchCategoryByName,fetchPostByCategoryId} from '../utils/api';
-import Link from 'next/link';
+
 import Card from '../components/card/card.component';
 import Loading from '../components/loading/loading';
 

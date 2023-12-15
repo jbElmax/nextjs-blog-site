@@ -18,7 +18,7 @@ const Navigation = ()=>{
                 </svg> 
                 
                 <h1 className="text-gray-700 text-lg font-medium">CodeCrafters Blog</h1>
-                <input type="text" className="px-3 py-2 rounded-full ml-2 focus:border-blue-600 focus:outline-none focus:ring focus:ring-green-300 w-[300px] text-sm" placeholder="Search by tag"/>
+
             </div>
             <nav className="">
                 <ul className="flex lg:flex-row flex-col text-gray-700 text-lg px-2">
@@ -40,7 +40,7 @@ const Navigation = ()=>{
                     </li>
 
                     <li className="px-3">
-                        <Link href="/" className="hover:text-amber-500">About Us</Link>
+                        <Link href="/about-us" className={`hover:text-amber-500 ${pathname === '/about-us' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>About Us</Link>
                     </li>
                     {user ? (
                     <li className="px-3">
