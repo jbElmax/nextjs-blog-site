@@ -5,6 +5,7 @@ import { fetchPostDetail } from "@/app/utils/api";
 import Image from "next/image";
 import Link from "next/link";
 import 'react-quill/dist/quill.snow.css';
+import { useUser } from "../../context/user.context";
 interface Tag{
     _id:string;
     name:string;
@@ -13,6 +14,18 @@ interface Author{
     _id:string;
     username:string;
 }
+interface User{
+    _id:string;
+    username:string;
+    email:string;
+
+}
+interface Comment{
+    _id:string;
+    user:User;
+    comment:string
+
+}
 interface DetailedPost {
     _id:string;
     title:string;
@@ -20,7 +33,9 @@ interface DetailedPost {
     image:string;
     author:Author;
     createdAt:string;
-    tags:Tag[]
+    tags:Tag[],
+    comments:Comment[]
+
 }
 function formatDateString(dateString: string): string {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -31,19 +46,64 @@ const PostDetail = ()=>{
     const params = useParams();
     const postId = params.postId;
     const[blogPost,setBlogPost] = useState<DetailedPost | null>(null);
+    const[comment,setComment] = useState('');
+    const[isCommenting,setIsCommenting] = useState(false);
+    const {user} = useUser();
+    
+    const onClickCommentHandler = ()=>{
+        setIsCommenting(!isCommenting);
+    }
 
-
-    useEffect(()=>{
-        const fetchBlogDetails = async()=>{
-            const data = await fetchPostDetail(postId);
-            setBlogPost(data);
+    const onClickSubmitHandler = async()=>{
+        try{
+            const userId = user?._id;
+            if(!userId){
+                alert("Login in first to add a comment");
+                return
+            }
+            console.log(userId)
+            const apiUrl = `http://localhost:8000/api/blog/${postId}/comment`
+            const response = await fetch(apiUrl,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({user:userId,comment}),
+            })
+            if(!response.ok){
+                if(response.status === 400){
+                    alert(await response.json());
+                }else{
+                    alert('Unable to add comment this time.')
+                }
+                
+                
+                return;
+            }
+            
+            alert('Comment successfully saved');
+            setComment('');
+            setIsCommenting(false);
+            await fetchBlogDetails();
+        }catch(error){
+            console.log(error);
         }
 
+    }
+    const fetchBlogDetails = async()=>{
+        const data = await fetchPostDetail(postId);
+        setBlogPost(data);
+
+    }
+    useEffect(()=>{
+
+
         fetchBlogDetails();
-    },[postId])
+        
+    },[])
     return(
 
-        <div className="lg:mx-auto p-2 place-items-center lg:w-[550px] w-[350px] mt-[30px] pb-[10px]">
+        <div className="lg:mx-auto mx-auto p-2 place-items-center lg:w-[550px] w-[350px] mt-[30px] pb-[10px]">
             
             {blogPost && (
                 <div className="px-1 py-1">
@@ -64,7 +124,24 @@ const PostDetail = ()=>{
                     <h1 className="text-2xl text-center font-medium text-gray-800 mt-[15px] mb-[15px]">{blogPost.title}</h1>
 
                     <div className="custom" dangerouslySetInnerHTML={{ __html: blogPost.content }} />
-                    <div className="flex place-items-center justify-between"><p className="text-green-500 hover:cursor-pointer hover:underline">Share</p><p className="float-right text-orange-500 mt-[10px] mb-[10px] hover:cursor-pointer hover:underline">Post a comment</p></div>
+                    <div className="flex place-items-center justify-between"><p className="text-green-500 hover:cursor-pointer hover:underline">Share</p><p className="float-right text-orange-500 mt-[10px] mb-[10px] hover:cursor-pointer hover:underline" onClick={onClickCommentHandler}>Post a comment</p></div>
+                    
+                        {isCommenting &&(
+                            <div className="flex flex-col">
+                                <textarea value={comment} rows={4} placeholder="type your comment here" className="px-2 py-2 border-2 border-gray-300 focus:outline-none focus:ring focus:ring-green-300 rounded" onChange={(e)=> setComment(e.target.value)}></textarea>
+                                <button className="px-2 py-3 border border-green-300 rounded mt-[10px] bg-orange-300 hover:bg-orange-400" onClick={onClickSubmitHandler}>Submit</button>
+                            </div>
+                        )}
+                    <div className="flex flex-col bg-orange-100 px-3 py-3 rounded mt-[10px]">
+                        <h2 className="font-medium">Comments</h2>
+                        {blogPost.comments.map((comment)=>
+                            (<div className="flex flex-col lg:flex-row justify-between" key={comment._id}>
+                                <p className="mt-[10px]">{comment.user.username} says:</p>
+                                <p className="text-sm mt-[10px] italic">{`--${comment.comment}`}</p>
+                            </div>))}
+                    </div> 
+
+                    
                 </div>
             )}
             
