@@ -63,3 +63,15 @@ export const fetchPostByTagName = async(tagName)=>{
     return await fetchData(apiUrl);
 }
 
+export const saveCommentOnPost = async(postId,userId,comment)=>{
+  const apiUrl = `http://localhost:8000/api/blog/${postId}/comment`
+  const response = await fetch(apiUrl,{
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({user:userId,comment}),
+  })
+  return response;
+}
+
