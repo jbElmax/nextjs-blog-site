@@ -3,7 +3,7 @@ const AboutUs = ()=>{
     const blogName = 'CodeCrafters Blog';
     return(
         <div className="flex flex-col lg:w-[500px] w-[350px] mx-auto px-3 py-3">
-            <h1 className="text-2xl font-medium text-gray-700 text-center">About Us</h1>
+            <h1 className="text-2xl font-medium text-gray-700 text-center">About Site</h1>
             <p className="mt-[20px]">{`Welcome to ${blogName} – a platform born out of passion for programming and technology. Our journey began with a simple yet powerful idea: to create a space where individuals could share their knowledge, experiences, and insights about the ever-evolving world of programming and technology.`}</p>
             <h2 className="text-xl font-medium text-gray-700 mt-[15px] text-center">Our Mission</h2>
             <p className="mt-[10px]">{`At ${blogName}, we are on a mission to empower tech enthusiasts, developers, and learners by providing a collaborative and open platform for the exchange of ideas. We believe that knowledge should be freely accessible, and our commitment is reflected in our dedication to open source principles.`}</p>
@@ -16,6 +16,7 @@ const AboutUs = ()=>{
             <h2 className="text-xl font-medium text-gray-700 mt-[15px] text-center">Join Our Community</h2>
             <p className="mt-[10px]">{`We invite you to join our vibrant community of tech enthusiasts, developers, and learners. Whether you're here to read, write, or contribute code, ${blogName} is a place where your passion for technology finds a home. Together, we can foster a collaborative environment that advances the collective understanding of programming and technology.`}</p>
             <p className="mt-[10px]">{`Thank you for being a part of ${blogName}. Let's code, create, and inspire together!`}</p>
+            <h3 className="float-right mt-[15px] ml-[180px] italic">Developed and managed by <span className="font-medium">Jan Elnas</span></h3>
         </div>
     )
 }

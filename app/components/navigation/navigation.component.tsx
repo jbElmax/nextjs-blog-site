@@ -40,7 +40,7 @@ const Navigation = ()=>{
                     </li>
 
                     <li className="px-3">
-                        <Link href="/about-us" className={`hover:text-amber-500 ${pathname === '/about-us' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>About Us</Link>
+                        <Link href="/about-us" className={`hover:text-amber-500 ${pathname === '/about-us' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>About</Link>
                     </li>
                     {user ? (
                     <li className="px-3">

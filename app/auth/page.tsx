@@ -48,7 +48,7 @@ const SignIn = ()=>{
                     <input id="pass" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} className="w-full px-2 py-2 border-2 border-gray-300 rounded mt-[10px] focus:outline-none focus:ring focus:ring-green-300"/>
                     <button type="submit" className="border mt-[20px] w-full px-2 py-3 rounded bg-blue-500 text-white hover:bg-blue-600">Sign In</button>
                 </form>
-                <button type="button" className="border-2 border-blue-500 mt-[20px] w-full px-2 py-3 rounded  text-gray-700 hover:bg-lime-50">Sign In w/ Google</button>
+                {/* <button type="button" className="border-2 border-blue-500 mt-[20px] w-full px-2 py-3 rounded  text-gray-700 hover:bg-lime-50">Sign In w/ Google</button> */}
 
                 <p className='text-gray-700 mt-[10px]'>Does not have an account yet?<span><Link href='/sign-up' className='text-blue-500 underline'> Register</Link></span></p>
             </div>
