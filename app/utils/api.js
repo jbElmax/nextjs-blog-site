@@ -75,3 +75,29 @@ export const saveCommentOnPost = async(postId,userId,comment)=>{
   return response;
 }
 
+export const editPost = async(postId,postData)=>{
+  const apiUrl = `http://localhost:8000/api/blog/${postId}`;
+
+    const response = await fetch(updatePostEndpoint, {
+      method: 'PUT', // or 'PATCH' depending on your API
+      headers: {
+        'Content-Type': 'application/json',
+        // Add any other headers you need, e.g., authorization
+      },
+      body: JSON.stringify(postData),
+    });
+    return response;
+
+}
+
+export const createPost = async(title,content,image,author,category,tags,isFeatured)=>{
+  const response =await fetch('http://localhost:8000/api/blog/',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title,content,image,author,category,tags,isFeatured }),
+            })
+  return response         
+}
+

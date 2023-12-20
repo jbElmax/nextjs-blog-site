@@ -1,32 +1,12 @@
 'use client'
 import { useParams } from "next/navigation";
 import { useState,useEffect,FormEvent } from "react";
-import { fetchPostDetail,fetchCategories } from "@/app/utils/api";
+import { fetchPostDetail,fetchCategories,editPost } from "@/app/utils/api";
 import { useUser } from "../../context/user.context";
 import { useRouter } from 'next/navigation';
 import RichTextEditor from "../../components/rich-text-editor/rich-text-editor.component";
 import Link from "next/link";
-interface Tag{
-    _id:string;
-    name:string;
-}
-interface Author{
-    _id:string;
-    username:string;
-}
-interface Category{
-    _id:string;
-    categoryName:string;
-}
-interface PostData {
-    title:string;
-    content:string;
-    image:string;
-    tags:Tag[];
-    category:Category;
-    author:Author,
-    isFeatured:boolean
-}
+import { PostData,Category } from "./types/editPostTypes";
 
 const EditPost = ()=>{
     const params = useParams();
@@ -64,33 +44,23 @@ const EditPost = ()=>{
           }));
     }
 
-    if(!user){
+
+    const author = user?._id;
+    if(!author){
         push('/dashboard');
     }
-    const author = user._id;
-
     const onSubmitHandler = async(e:FormEvent)=>{
         e.preventDefault();
 
-        // Assuming you have an API endpoint to update a blog post
-        const updatePostEndpoint = `http://localhost:8000/api/blog/${postId}`;
-      
         try {
-          const response = await fetch(updatePostEndpoint, {
-            method: 'PUT', // or 'PATCH' depending on your API
-            headers: {
-              'Content-Type': 'application/json',
-              // Add any other headers you need, e.g., authorization
-            },
-            body: JSON.stringify(postData),
-          });
+            const response = await editPost(postId,postData)
       
           if (response.ok) {
-            // The update was successful, you may want to redirect to the updated post or another page
+
             alert('Blog post updated successfully!');
             push('/dashboard');
           } else {
-            // Handle the case where the update was not successful
+
             console.error('Failed to update blog post');
           }
         } catch (error) {
