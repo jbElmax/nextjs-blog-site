@@ -37,6 +37,7 @@ const CreatePost:React.FC<NewPostProps> = ({onSubmitHandler,onChangeHandler,cont
             
             <label className="mt-[10px]">Category</label>
             <select onChange={onChangeHandler} name='category' className="border-2 border-gray-300 rounded mt-[10px] px-2 py-2 focus:outline-none focus:ring focus:ring-orange-300">
+                <option value=''>Please Select Category</option>
                 {categories.length > 0 ? (
                     categories.map((category)=>{
                         return(<option key={category._id} value={category._id}>{category.categoryName}</option>)

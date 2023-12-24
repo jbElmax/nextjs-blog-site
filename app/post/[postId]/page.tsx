@@ -28,17 +28,15 @@ const PostDetail = ()=>{
                 return
             }
             const response =await saveCommentOnPost(postId,userId,comment)
-            if(!response.ok){
-                if(response.status === 400){
-                    alert(await response.json());
-                }else{
-                    alert('Unable to add comment this time.')
-                }
-                            
-                return;
+
+            if(response.status === 200){
+                console.log(response.status);
+                alert('Comment successfully saved');
+            }else{
+                alert('Unable to add comment this time');
             }
             
-            alert('Comment successfully saved');
+            
             setComment('');
             setIsCommenting(false);
             await fetchBlogDetails();
@@ -48,8 +46,8 @@ const PostDetail = ()=>{
 
     }
     const fetchBlogDetails = async()=>{
-        const data = await fetchPostDetail(postId);
-        setBlogPost(data);
+        const response = await fetchPostDetail(postId);
+        setBlogPost(response.data);
         setIsLoading(false)
     }
     useEffect(()=>{

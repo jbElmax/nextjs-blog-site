@@ -27,8 +27,8 @@ const Home = ()=> {
   }
   const fetchData = async()=>{
       
-    const data = await fetchAllPost();
-    setAllPost(data ?? []);
+    const response = await fetchAllPost();
+    setAllPost(response.data ?? []);
   };
 
   const onSubmitHandler = async(e:React.FormEvent)=>{
@@ -37,17 +37,10 @@ const Home = ()=> {
   
     if (searchTag.length !== 0) {
       try {
-        const posts = await fetchPostByTagName(searchTag);
-        if (posts.notFound) {
-          // Handle the case where no data is found (HTTP 404)
-          console.log('No data found.');
-        }
-        else if (posts.error) {
-          // Handle the error, for example, show an error message to the user
-          console.error(posts.error);
-        } else {
-          setAllPost(posts);
-        }
+        const response = await fetchPostByTagName(searchTag);
+
+          setAllPost(response.data ?? []);
+
       } catch (error) {
         alert('Error occurred');
       } finally {

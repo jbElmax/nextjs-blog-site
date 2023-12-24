@@ -18,15 +18,15 @@ const EditPost = ()=>{
     const {user} = useUser();
     useEffect(()=>{
         const fetchBlogDetails = async()=>{
-            const data = await fetchPostDetail(postId);
-            setPostData(data);
+            const response = await fetchPostDetail(postId);
+            setPostData(response.data);
         }
 
         fetchBlogDetails();
         const fetchCategoryData = async()=>{
-            const data = await fetchCategories();
+            const response = await fetchCategories();
 
-            setCategories(data)
+            setCategories(response.data)
         }
 
         fetchCategoryData();
@@ -55,7 +55,7 @@ const EditPost = ()=>{
         try {
             const response = await editPost(postId,postData)
       
-          if (response.ok) {
+          if (response.status === 200) {
 
             alert('Blog post updated successfully!');
             push('/dashboard');

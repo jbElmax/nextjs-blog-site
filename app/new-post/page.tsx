@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import CreatePost from "../components/create-post/create-post.component";
 import { Category } from "./types/newPostTypes";
 
+
 const defaultFormValue = {
     title:'',
     content:'',
@@ -44,20 +45,21 @@ const NewPost = ()=>{
         e.preventDefault();
         const tags = tagstr.split(',').map(tag=>tag.trim());
         const isFeatured = isChecked;
-
+        console.log(category);
         try{
             const response = await createPost(title,content,image,author,category,tags,isFeatured)
-            if(!response.ok){
-                if(response.status === 400){
-                    alert(await response.json());
-                }else{
-                    alert('Unable to register user this time.')
-                }
-                  
-                return;
+            if(!category || category ===''){
+                alert('Please select Category');
+                return
+            }
+
+            if(response.status == 200){
+                alert('Post successfully created');
+            }else{
+                alert('Unable to create post this time');
             }
             
-            alert('Post successfully created');
+            
             resetFormFields();
 
         }catch(error){
@@ -69,24 +71,24 @@ const NewPost = ()=>{
       };
     useEffect(()=>{
         const fetchCategoryData = async()=>{
-            const data = await fetchCategories();
+            const response = await fetchCategories();
 
-            setCategories(data)
+            setCategories(response.data)
         }
 
         fetchCategoryData();
     },[])
     return(
-           
-            <CreatePost
-                onSubmitHandler={onSubmitHandler}
-                onChangeHandler={onChangeHandler}
-                content={content}
-                handleContentChange={handleContentChange}
-                categories={categories}
-                isChecked={isChecked}
-                handleCheckboxChange={handleCheckboxChange}
-            />
+           <CreatePost 
+            onChangeHandler={onChangeHandler}
+            onSubmitHandler={onSubmitHandler}
+            content = {content}
+            handleContentChange = {handleContentChange}
+            categories={categories}
+            isChecked={isChecked}
+            handleCheckboxChange={handleCheckboxChange}
+           />
+
     )
         
 }

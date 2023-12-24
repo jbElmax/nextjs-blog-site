@@ -4,6 +4,7 @@ import { useUser } from '../context/user.context';
 import {fetchAllPostOfUser} from '../utils/api';
 import { useEffect,useState } from 'react';
 import DashboardCard from '../components/dashboard-card/dashboard-card.component';
+import { useRouter } from 'next/navigation';
 
 interface Blog {
     _id: string;
@@ -13,13 +14,19 @@ interface Blog {
   }
 
 const Dashboard = ()=>{
+    const {push} = useRouter();
     const {user} = useUser();
-    console.log(user);
+
     const [postBlogs, setPostBlogs] = useState<Blog[]>([]);
 
     const fetchData = async()=>{
+        const userId = user?._id;
+        if(!userId){
+            push('/auth')
+        }
         const data = await fetchAllPostOfUser(user._id);
-        setPostBlogs(data ?? []);
+  
+        setPostBlogs(data.data ?? []);
       };
 
     useEffect(()=>{
@@ -54,7 +61,7 @@ const Dashboard = ()=>{
     return(
         <div className='lg:mt-[0px] mt-[310px] px-2'>
             <div className='flex justify-between text-gray-700'>
-                <h1 className='text-xl font-medium'>Dashboard</h1><p>Welcome back <span  className='font-medium'>{user.username}!</span></p>
+                <h1 className='text-xl font-medium'>Dashboard</h1><p>Welcome back <span  className='font-medium'>{user?.username}!</span></p>
             </div>
               
             <div><Link href={'/new-post'} className='rounded border border-orange-400 text-gray-800 px-2 py-2 float-right mt-[15px] hover:bg-orange-200'>Create Post</Link></div>

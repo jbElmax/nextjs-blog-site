@@ -2,7 +2,7 @@ import Loading from "../loading/loading";
 import Image from "next/image";
 import Link from "next/link";
 import { DetailedPost } from "./types/interface";
-import formatDateString from "../../utils/helper"
+import {formatDateString} from "../../utils/helper"
 
 interface PostProps {
     blogPost: DetailedPost | null;

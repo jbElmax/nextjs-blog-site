@@ -1,18 +1,17 @@
-
-const fetchData = async (apiUrl) => {
+const baseUrl = "http://localhost:8000"
+const fetchData = async (apiUrl,options = {}) => {
     try {
-      const response = await fetch(apiUrl);
-      if (response.status === 404) {
-        // If the response status is 404, return a special object indicating not found
-        return { notFound: true };
-      }
+      const response = await fetch(apiUrl,options);
+
       if (!response.ok) {
         // If the response status is not OK (200), throw an error
         throw new Error(`Network response not OK. Status: ${response.status}`);
       }
   
       const data = await response.json();
-      return data;
+    
+      // Return an object containing both the status code and the data
+      return { status: response.status, data };
     } catch (error) {
       console.error(error);
   
@@ -24,80 +23,106 @@ const fetchData = async (apiUrl) => {
       }
     }
   };
+const createFetchRequest = (method,body)=>({
+  method:method,
+  headers:{
+    'Content-Type':'application/json',
+  },
+  body:JSON.stringify(body)
+})
+
+const createPostRequst = (requestData)=>createFetchRequest('POST',requestData);
+const createPutRequest = (requestData)=>createFetchRequest('PUT',requestData);
+
 export const fetchFeaturedBlog = async()=>{
-    const apiUrl = "http://localhost:8000/api/blog/featured";
+    const apiUrl = `${baseUrl}/api/blog/featured`;
     return await fetchData(apiUrl);
 }
 
 export const fetchAllPost = async()=>{
-    const apiUrl = "http://localhost:8000/api/blog"
+    const apiUrl = `${baseUrl}/api/blog`
     return await fetchData(apiUrl);
 }
 
 export const fetchAllPostOfUser = async(authorId)=>{
-    const apiUrl = `http://localhost:8000/api/blog/author/${authorId}`;
+    const apiUrl = `${baseUrl}/api/blog/author/${authorId}`;
     return await fetchData(apiUrl);
 }
 
 export const fetchPostDetail = async(postId)=>{
-    const apiUrl = `http://localhost:8000/api/blog/${postId}`;
+    const apiUrl = `${baseUrl}/api/blog/${postId}`;
     return await fetchData(apiUrl);
 }
 
 export const fetchCategories = async()=>{
-    const apiUrl = "http://localhost:8000/api/category/";
+    const apiUrl = `${baseUrl}/api/category/`;
     return await fetchData(apiUrl);
 }
 
 export const fetchCategoryByName = async(categoryName)=>{
-    const apiUrl = `http://localhost:8000/api/category/getCategory/${categoryName}`
+    const apiUrl = `${baseUrl}/api/category/getCategory/${categoryName}`
     return await fetchData(apiUrl);
 }
 export const fetchPostByCategoryId = async(categoryId)=>{
-    const apiUrl = `http://localhost:8000/api/blog/category/${categoryId}`
+    const apiUrl = `${baseUrl}/api/blog/category/${categoryId}`
     return await fetchData(apiUrl);
 }
 
 export const fetchPostByTagName = async(tagName)=>{
-    const apiUrl = `http://localhost:8000/api/blog/search-by-tag/${tagName}`;
+    const apiUrl = `${baseUrl}/api/blog/search-by-tag/${tagName}`;
     return await fetchData(apiUrl);
 }
 
 export const saveCommentOnPost = async(postId,userId,comment)=>{
-  const apiUrl = `http://localhost:8000/api/blog/${postId}/comment`
-  const response = await fetch(apiUrl,{
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({user:userId,comment}),
-  })
-  return response;
+  const apiUrl = `${baseUrl}/api/blog/${postId}/comment`
+  const options = createPostRequst({user:userId,comment});
+  return await fetchData(apiUrl,options);
 }
 
 export const editPost = async(postId,postData)=>{
-  const apiUrl = `http://localhost:8000/api/blog/${postId}`;
+  const apiUrl = `${baseUrl}/api/blog/${postId}`;
 
-    const response = await fetch(updatePostEndpoint, {
-      method: 'PUT', // or 'PATCH' depending on your API
-      headers: {
-        'Content-Type': 'application/json',
-        // Add any other headers you need, e.g., authorization
-      },
-      body: JSON.stringify(postData),
-    });
-    return response;
+    // const response = await fetch(apiUrl, {
+    //   method: 'PUT', // or 'PATCH' depending on your API
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     // Add any other headers you need, e.g., authorization
+    //   },
+    //   body: JSON.stringify(postData),
+    // });
+    // return response;
+  const options = createPutRequest(postData);
+  return await fetchData(apiUrl,options)
 
 }
 
 export const createPost = async(title,content,image,author,category,tags,isFeatured)=>{
-  const response =await fetch('http://localhost:8000/api/blog/',{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ title,content,image,author,category,tags,isFeatured }),
-            })
-  return response         
+  const apiUrl = `${baseUrl}/api/blog/`
+  // const response =await fetch(`${baseUrl}/api/blog/`,{
+  //               method: 'POST',
+  //               headers: {
+  //                   'Content-Type': 'application/json',
+  //               },
+  //               body: JSON.stringify({ title,content,image,author,category,tags,isFeatured }),
+  //           })
+  // return response
+  const postData = {title,content,image,author,category,tags,isFeatured}
+  const options = createPostRequst(postData);
+  return await fetchData(apiUrl,options)         
+}
+
+export const loginUser = async(email,password)=>{
+  const apiUrl = `${baseUrl}/auth/login`
+//   const response =await fetch(`${baseUrl}/auth/login`,{
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ email,password }),
+// })
+// return response  
+  const postData = {email,password}
+  const options = createPostRequst(postData);
+  return await fetchData(apiUrl,options);
 }
 

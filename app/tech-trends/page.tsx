@@ -19,15 +19,15 @@ const TechTrends = ()=>{
         return first40Words;
       };
     async function getCategory(){
-        const category = await fetchCategoryByName(categoryName);
+        const response = await fetchCategoryByName(categoryName);
         
         
-        return category._id;
+        return response.data._id;
         // console.log(data);
     }
     const getArticles = async()=>{
-        const data = await fetchPostByCategoryId(await getCategory());
-        setArticles(data);
+        const response = await fetchPostByCategoryId(await getCategory());
+        setArticles(response.data);
     }
     useEffect(()=>{
         //getCategory();

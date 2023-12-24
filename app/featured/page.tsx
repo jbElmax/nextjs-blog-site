@@ -18,8 +18,8 @@ const Articles = ()=>{
 
     useEffect(()=>{
         const fetchData = async()=>{
-          const data = await fetchFeaturedBlog();
-          setFeaturedBlogs(data ?? []);
+          const response = await fetchFeaturedBlog();
+          setFeaturedBlogs(response.data ?? []);
         };
     
         fetchData();
