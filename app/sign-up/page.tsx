@@ -1,6 +1,9 @@
 'use client'
 import Link from "next/link";
 import { FormEvent, useState } from "react";
+import Label from "../components/common-components/label/label.component";
+import Input from "../components/common-components/input/input.component";
+import Button from "../components/common-components/button/button.component";
 
 const defaultFormFields = {
     username:'',
@@ -59,16 +62,16 @@ const SignUp = ()=>{
         <form className="" onSubmit={onSubmitHandler}>
             
             <h2 className="text-xl text-gray-700 text-center mb-[10px]">Register</h2>
-            <label htmlFor="username" className="mt-[20px] text-gray-700 text-sm">Username</label>
-            <input onChange={onChangeHandler} id="username" name='username' type="text" className="w-full px-2 py-2 border-2 border-gray-200 rounded mt-[10px] mb-[10px] focus:outline-none focus:ring focus:ring-green-300"/>
-            <label htmlFor="email" className="mt-[20px] text-gray-700 text-sm">Email</label>
-            <input onChange={onChangeHandler} id="email" name='email' type="text" className="w-full px-2 py-2 border-2 border-gray-200 rounded mt-[10px] mb-[10px] focus:outline-none focus:ring focus:ring-green-300"/>
-            <label htmlFor="password" className="mt-[20px] text-gray-700 text-sm">Password</label>
-            <input onChange={onChangeHandler} id="password" name='password' type="password" className="w-full px-2 py-2 border-2 border-gray-200 rounded mt-[10px] mb-[5px] focus:outline-none focus:ring focus:ring-green-300"/>
-            <label htmlFor="confirmPassword" className="mt-[25px] text-gray-700 text-sm">Confirm Password</label>
-            <input onChange={onChangeHandler} id="confirmPassword" name='confirmPassword' type="password" className="w-full px-2 py-2 border-2 border-gray-200 rounded mt-[10px] focus:outline-none focus:ring focus:ring-green-300"/>
+            <Label htmlFor="username" cls="mt-[20px]" text="Username"/>
+            <Input onChangeHandler={onChangeHandler} id="username" name='username' value={username} type="text" cls="w-full border-gray-200 mt-[10px] mb-[10px] focus:outline-none focus:ring focus:ring-green-300"/>
+            <Label htmlFor="email" cls="mt-[20px]" text="Email"/>
+            <Input onChangeHandler={onChangeHandler} id="email" name='email' value={email} type="text" cls="w-full border-gray-200 mt-[10px] mb-[10px] focus:outline-none focus:ring focus:ring-green-300"/>
+            <Label htmlFor="password" cls="mt-[20px]" text="Password"/>
+            <Input onChangeHandler={onChangeHandler} id="password" name='password' value={password} type="password" cls="w-full border-gray-200 mt-[10px] mb-[5px] focus:outline-none focus:ring focus:ring-green-300"/>
+            <Label htmlFor="confirmPassword" cls="mt-[25px]" text="Confirm Password"/>
+            <Input onChangeHandler={onChangeHandler} id="confirmPassword" name='confirmPassword' value={confirmPassword} type="password" cls="w-full border-gray-200 mt-[10px] focus:outline-none focus:ring focus:ring-green-300"/>
 
-            <button type="submit" className=" mt-[20px] w-full px-2 py-3 rounded border-2 border-blue-500 text-gray-700 hover:bg-lime-50">Register</button>
+            <Button type="submit" cls=" mt-[20px] bg-white w-full border-orange-500 text-gray-700 hover:bg-orange-400 hover:text-white" label="Register"/>
         </form>
 
 

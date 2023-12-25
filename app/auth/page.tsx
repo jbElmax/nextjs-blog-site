@@ -5,12 +5,23 @@ import { useRouter } from 'next/navigation';
 import SignInForm from '../components/sign-in-form/sign-in-form.component';
 import {parseJwt} from '../utils/helper'
 
+const defaultField = {
+    email:'',
+    password:''
+}
+
 const SignIn = ()=>{
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
+    const [formFields,setFormFields] = useState(defaultField);
+    const {email,password} = formFields;
     const {loginUser} = useUser();
     const {push} = useRouter();
 
+    const onChangeHandler = (e:React.ChangeEvent<HTMLInputElement>)=>{
+        const {name,value} = e.target;
+
+        setFormFields({...formFields,[name]:value})
+    }
     const onSubmitHandler = async(e:FormEvent)=>{
         e.preventDefault();
         try {
@@ -49,7 +60,7 @@ const SignIn = ()=>{
     }
     return(
 
-        <SignInForm email={email} setEmail={setEmail} password={password} setPassword={setPassword} onSubmitHandler={onSubmitHandler}/>
+        <SignInForm email={email} onChangeHandler={onChangeHandler} password={password} onSubmitHandler={onSubmitHandler}/>
     
     )
 }

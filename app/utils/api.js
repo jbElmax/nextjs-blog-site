@@ -81,16 +81,6 @@ export const saveCommentOnPost = async(postId,userId,comment)=>{
 
 export const editPost = async(postId,postData)=>{
   const apiUrl = `${baseUrl}/api/blog/${postId}`;
-
-    // const response = await fetch(apiUrl, {
-    //   method: 'PUT', // or 'PATCH' depending on your API
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     // Add any other headers you need, e.g., authorization
-    //   },
-    //   body: JSON.stringify(postData),
-    // });
-    // return response;
   const options = createPutRequest(postData);
   return await fetchData(apiUrl,options)
 
@@ -98,14 +88,6 @@ export const editPost = async(postId,postData)=>{
 
 export const createPost = async(title,content,image,author,category,tags,isFeatured)=>{
   const apiUrl = `${baseUrl}/api/blog/`
-  // const response =await fetch(`${baseUrl}/api/blog/`,{
-  //               method: 'POST',
-  //               headers: {
-  //                   'Content-Type': 'application/json',
-  //               },
-  //               body: JSON.stringify({ title,content,image,author,category,tags,isFeatured }),
-  //           })
-  // return response
   const postData = {title,content,image,author,category,tags,isFeatured}
   const options = createPostRequst(postData);
   return await fetchData(apiUrl,options)         
@@ -113,14 +95,6 @@ export const createPost = async(title,content,image,author,category,tags,isFeatu
 
 export const loginUser = async(email,password)=>{
   const apiUrl = `${baseUrl}/auth/login`
-//   const response =await fetch(`${baseUrl}/auth/login`,{
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ email,password }),
-// })
-// return response  
   const postData = {email,password}
   const options = createPostRequst(postData);
   return await fetchData(apiUrl,options);
