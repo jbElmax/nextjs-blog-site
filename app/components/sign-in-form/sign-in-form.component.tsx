@@ -20,7 +20,7 @@ const SignInForm:React.FC<SignInProps> = ({onSubmitHandler,email,onChangeHandler
                 <Input id="email" name="email" type="text" value={email} onChangeHandler={onChangeHandler} cls="w-full border-gray-300 mt-[10px] mb-[10px] focus:outline-none focus:ring focus:ring-green-300"/>
                 <Label htmlFor="pass" cls="mt-[20px]" text="Password"/>
                 <Input id="pass" name="password" type="password" value={password} onChangeHandler={onChangeHandler} cls="w-full border-gray-300 mt-[10px] focus:outline-none focus:ring focus:ring-green-300"/>      
-                <Button type="submit" cls="mt-[30px] border-green-200 w-full bg-lime-500 text-white hover:bg-lime-600" label="Sign In"/>
+                <Button type="submit" cls="mt-[30px] border-green-200 w-full bg-orange-400 text-white hover:bg-orange-500" label="Sign In"/>
             </form>
         
             <p className='text-gray-700 mt-[15px]'>Does not have an account yet?<span><Link href='/sign-up' className='text-blue-500 underline'> Register</Link></span></p>

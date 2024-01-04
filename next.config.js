@@ -11,5 +11,8 @@ module.exports = {
         },
       ],
     },
+    env:{
+      baseUrl:'https://www.indiamart.com/'
+    }
   }
   

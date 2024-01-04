@@ -4,7 +4,7 @@ import { useUser } from '../context/user.context';
 import { useRouter } from 'next/navigation';
 import SignInForm from '../components/sign-in-form/sign-in-form.component';
 import {parseJwt} from '../utils/helper'
-
+import { signInUser } from '../utils/api';
 const defaultField = {
     email:'',
     password:''
@@ -25,31 +25,26 @@ const SignIn = ()=>{
     const onSubmitHandler = async(e:FormEvent)=>{
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:8000/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
+            const response = await signInUser(email,password)
+            
+            if (response.status === 200) {
 
-            if (response.ok) {
-
-                const userData =await response.json();
+                const userData =await response.data;
                 const decodedPayload = parseJwt(userData);
 
                 const user = {
                     username:decodedPayload.userInfo.username,
                     isAdmin:decodedPayload.userInfo.isAdmin,
-                    _id:decodedPayload.userInfo._id
+                    _id:decodedPayload.userInfo._id,
+                    token:userData
                 }
 
                 loginUser(user);
                 push('/dashboard');
             } else {
 
-                const data = await response.json();
-                console.error(data);
+                const data = await response.data.json();
+                
 
             }
         } catch (error) {

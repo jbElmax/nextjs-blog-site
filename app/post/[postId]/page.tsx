@@ -27,7 +27,7 @@ const PostDetail = ()=>{
                 alert("Login in first to add a comment");
                 return
             }
-            const response =await saveCommentOnPost(postId,userId,comment)
+            const response =await saveCommentOnPost(postId,userId,comment,user.token)
 
             if(response.status === 200){
                 console.log(response.status);

@@ -5,8 +5,7 @@ import { useUser } from "../context/user.context";
 import { useRouter } from 'next/navigation';
 import CreatePost from "../components/create-post/create-post.component";
 import { Category } from "./types/newPostTypes";
-
-
+import DOMPurify from 'isomorphic-dompurify';
 const defaultFormValue = {
     title:'',
     content:'',
@@ -47,7 +46,9 @@ const NewPost = ()=>{
         const isFeatured = isChecked;
         console.log(category);
         try{
-            const response = await createPost(title,content,image,author,category,tags,isFeatured)
+            const sanitizeContent = DOMPurify.sanitize(content);
+            const postData = {title,content:sanitizeContent,image,author,category,tags,isFeatured};
+            const response = await createPost(postData,user.token)
             if(!category || category ===''){
                 alert('Please select Category');
                 return
@@ -55,6 +56,7 @@ const NewPost = ()=>{
 
             if(response.status == 200){
                 alert('Post successfully created');
+                push('/dashboard');
             }else{
                 alert('Unable to create post this time');
             }
@@ -87,6 +89,7 @@ const NewPost = ()=>{
             categories={categories}
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
+            formFields={formFields}
            />
 
     )

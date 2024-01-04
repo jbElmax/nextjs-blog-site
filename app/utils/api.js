@@ -23,16 +23,30 @@ const fetchData = async (apiUrl,options = {}) => {
       }
     }
   };
-const createFetchRequest = (method,body)=>({
+const createHeaders = (isAuthenticated,token)=>{
+  const headers = new Headers();
+  if(isAuthenticated){
+    headers.append('Authorization',`Bearer ${token}`);
+    headers.append('Content-type','application/json');
+  }else{
+    headers.append('Content-type','application/json');
+  }
+  return headers;
+}
+const createFetchRequest = (method,body,isAuthenticated,token)=>({
   method:method,
-  headers:{
-    'Content-Type':'application/json',
-  },
+  headers:createHeaders(isAuthenticated,token),
   body:JSON.stringify(body)
 })
 
-const createPostRequst = (requestData)=>createFetchRequest('POST',requestData);
-const createPutRequest = (requestData)=>createFetchRequest('PUT',requestData);
+const createDeleteFetchRequest = (method,isAuthenticated,token)=>({
+  method:method,
+  headers:createHeaders(isAuthenticated,token)
+})
+
+const createPostRequst = (requestData,isAuthenticated,token)=>createFetchRequest('POST',requestData,isAuthenticated,token);
+const createPutRequest = (requestData,isAuthenticated,token)=>createFetchRequest('PUT',requestData,isAuthenticated,token);
+const createDeleteRequest = (isAuthenticated,token)=>createDeleteFetchRequest('DELETE',isAuthenticated,token)
 
 export const fetchFeaturedBlog = async()=>{
     const apiUrl = `${baseUrl}/api/blog/featured`;
@@ -73,9 +87,9 @@ export const fetchPostByTagName = async(tagName)=>{
     return await fetchData(apiUrl);
 }
 
-export const saveCommentOnPost = async(postId,userId,comment)=>{
+export const saveCommentOnPost = async(postId,userId,comment,token)=>{
   const apiUrl = `${baseUrl}/api/blog/${postId}/comment`
-  const options = createPostRequst({user:userId,comment});
+  const options = createPostRequst({user:userId,comment},true,token);
   return await fetchData(apiUrl,options);
 }
 
@@ -86,17 +100,23 @@ export const editPost = async(postId,postData)=>{
 
 }
 
-export const createPost = async(title,content,image,author,category,tags,isFeatured)=>{
+export const createPost = async(postData,token)=>{
   const apiUrl = `${baseUrl}/api/blog/`
-  const postData = {title,content,image,author,category,tags,isFeatured}
-  const options = createPostRequst(postData);
+  
+  const options = createPostRequst(postData,true,token);
   return await fetchData(apiUrl,options)         
 }
 
-export const loginUser = async(email,password)=>{
+export const signInUser = async(email,password)=>{
   const apiUrl = `${baseUrl}/auth/login`
   const postData = {email,password}
-  const options = createPostRequst(postData);
+  const options = createPostRequst(postData,false);
+  return await fetchData(apiUrl,options);
+}
+
+export const deleteBlogPost = async(postId,token)=>{
+  const apiUrl = `http://localhost:8000/api/blog/${postId}`
+  const options = createDeleteRequest(true,token);
   return await fetchData(apiUrl,options);
 }
 

@@ -18,7 +18,7 @@ const Card:React.FC<CardProps> = ({className, ...blogProp})=>{
                 ):(<p></p>) 
             }
             
-            <div className='justify-between flex mt-[10px] place-items-center'><p className='text-green-600 hover:cursor-pointer hover:underline text-sm'>Share</p><Link href={`/post/${blogProp._id}`} className='float-right text-orange-500 mt-[10px] hover:cursor-pointer hover:underline text-sm'>Read More</Link></div>
+            <div className='justify-between flex mt-[10px] place-items-center'><p className='text-green-600 hover:cursor-pointer hover:underline text-sm'></p><Link href={`/post/${blogProp._id}`} className='float-right text-orange-500 mt-[10px] hover:cursor-pointer hover:underline text-sm'>Read More</Link></div>
         </div>
     )
 }

@@ -7,6 +7,9 @@ import { useRouter } from 'next/navigation';
 import RichTextEditor from "../../components/rich-text-editor/rich-text-editor.component";
 import Link from "next/link";
 import { PostData,Category } from "./types/editPostTypes";
+import Label from "@/app/components/common-components/label/label.component";
+import Input from "@/app/components/common-components/input/input.component";
+import Button from "@/app/components/common-components/button/button.component";
 
 const EditPost = ()=>{
     const params = useParams();
@@ -146,15 +149,16 @@ const EditPost = ()=>{
                 <Link href = "/dashboard" className="text-green-600"> Back</Link>
             </div>
             <h1 className="text-lg font-medium text-gray-700 text-center">Edit Blog Post</h1>
-            <label>Title</label>
-            <input
-                onChange={handleTitleChange}
+            <Label htmlFor="title" cls="" text="Title"/>
+            <Input
+                onChangeHandler={handleTitleChange}
                 value={postData?.title}
+                id='title'
                 name='title'
                 type="text"
-                className="border-2 border-gray-300 rounded px-2 py-2 focus:outline-none focus:ring focus:ring-orange-300 mt-[10px]"
+                cls="border-gray-300 focus:outline-none focus:ring focus:ring-orange-300 mt-[10px]"
                 />
-            <label className="mt-[10px]">Content</label>
+            <Label htmlFor="" cls="mt-[10px]" text="Content"/>
             <div className="mt-[10px]">
                 {postData ? (
                     <RichTextEditor value={postData?.content} onChange={handleContentChange}/>
@@ -163,14 +167,14 @@ const EditPost = ()=>{
                 )}
             
             </div>
-            <label className="lg:mt-[40px] mt-[80px]">Image URL</label>
+            <Label htmlFor="image" cls="lg:mt-[40px] mt-[80px]" text="Image URL"/>
             {postData ? (
-                <input onChange={handleImageChange} name ='image' type="text" className="border-2 border-gray-300 rounded px-2 py-2 focus:outline-none focus:ring focus:ring-orange-300 mt-[10px]" value={postData.image}/>
+                <Input onChangeHandler={handleImageChange} id='image' name ='image' type="text" cls="border-gray-300 focus:outline-none focus:ring focus:ring-orange-300 mt-[10px]" value={postData.image}/>
             ):('no image')}
             
             
-            <label className="mt-[10px]">Category</label>
-            <select name='category' className="border-2 border-gray-300 rounded mt-[10px] px-2 py-2 focus:outline-none focus:ring focus:ring-orange-300" 
+            <Label htmlFor="category" cls="mt-[10px]" text="Category"/>
+            <select id='category' name='category' className="border-2 border-gray-300 rounded mt-[10px] px-2 py-2 focus:outline-none focus:ring focus:ring-orange-300" 
             value={postData?.category._id || ''} onChange={handleCategoryChange}>
                 {categories.length > 0 ? (
                     categories.map((category)=>{
@@ -182,17 +186,17 @@ const EditPost = ()=>{
             </select>
 
             <div className="mt-[10px]">
-                <label>Is Featured?</label>
+                <Label htmlFor="chk" cls="" text="Is Featured?"/>
                 {postData ? (
-                    <input onChange={handleCheckboxChange} type="checkbox" className="ml-[10px]" checked={postData?.isFeatured}/>
+                    <input onChange={handleCheckboxChange} id='chk' type="checkbox" className="ml-[10px]" checked={postData?.isFeatured}/>
                 ):(
-                    <input onChange={handleCheckboxChange} type="checkbox" className="ml-[10px]" checked={false}/>
+                    <input onChange={handleCheckboxChange} id='chk' type="checkbox" className="ml-[10px]" checked={false}/>
                 )}
                 
             </div>
-            <label className="mt-[10px]">Tags</label>
-            <input onChange={handleTagstrChange} name='tagstr' value={concatenatedTags} type="text" placeholder="Enter tags separated by commas" className="border-2 border-gray-300 rounded px-2 py-2 focus:outline-none focus:ring focus:ring-orange-300 mt-[10px]"/>
-            <button type="submit" className="border border-orange-300 px-2 py-2 bg-orange-400 mt-[20px] rounded hover:bg-orange-500">Publish</button>
+            <Label htmlFor="tagstr"  cls="mt-[10px]" text="Tags"/>
+            <Input onChangeHandler={handleTagstrChange} id='tagstr' name='tagstr' value={concatenatedTags} type="text" placeholder="Enter tags separated by commas" cls="border-gray-300 focus:outline-none focus:ring focus:ring-orange-300 mt-[10px]"/>
+            <Button type="submit" cls="border-orange-300 bg-orange-400 mt-[20px] hover:bg-orange-500" label="Publish"/>
         </div>
 
     </form>

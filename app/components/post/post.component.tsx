@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { DetailedPost } from "./types/interface";
 import {formatDateString} from "../../utils/helper"
+import FbShareButton from "../fb-share-button/fb.share.button.component";
+
 
 interface PostProps {
     blogPost: DetailedPost | null;
@@ -39,7 +41,7 @@ const Post:React.FC<PostProps> = ({isLoading,blogPost,isCommenting,comment,onCli
                         <h1 className="text-2xl text-center font-medium text-gray-800 mt-[15px] mb-[15px]">{blogPost.title}</h1>
 
                         <div className="custom" dangerouslySetInnerHTML={{ __html: blogPost.content }} />
-                        <div className="flex place-items-center justify-between"><p className="text-green-500 hover:cursor-pointer hover:underline">Share</p><p className="float-right text-orange-500 mt-[10px] mb-[10px] hover:cursor-pointer hover:underline" onClick={onClickCommentHandler}>Post a comment</p></div>
+                        <div className="flex place-items-center justify-between mt-[20px]"><div className="flex"><p className="text-green-500 mr-[5px]">Share</p><FbShareButton postId={blogPost._id}/></div><p className="float-right text-orange-500 mt-[10px] mb-[10px] hover:cursor-pointer hover:underline" onClick={onClickCommentHandler}>Post a comment</p></div>
                         
                             {isCommenting &&(
                                 <div className="flex flex-col">

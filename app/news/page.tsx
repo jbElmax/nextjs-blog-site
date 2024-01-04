@@ -26,7 +26,7 @@ const News = ()=> {
         
         
         return response.data._id;
-        // console.log(data);
+        console.log(response);
     }
     const getArticles = async()=>{
         const response = await fetchPostByCategoryId(await getCategory());

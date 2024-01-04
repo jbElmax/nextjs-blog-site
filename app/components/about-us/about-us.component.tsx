@@ -1,4 +1,4 @@
-
+import Link from "next/link";
 const AboutUs = ()=>{
     const blogName = 'CodeCrafters Blog';
     return(
@@ -16,7 +16,10 @@ const AboutUs = ()=>{
             <h2 className="text-xl font-medium text-gray-700 mt-[15px] text-center">Join Our Community</h2>
             <p className="mt-[10px]">{`We invite you to join our vibrant community of tech enthusiasts, developers, and learners. Whether you're here to read, write, or contribute code, ${blogName} is a place where your passion for technology finds a home. Together, we can foster a collaborative environment that advances the collective understanding of programming and technology.`}</p>
             <p className="mt-[10px]">{`Thank you for being a part of ${blogName}. Let's code, create, and inspire together!`}</p>
-            <h3 className="float-right mt-[15px] ml-[180px] italic">Developed and managed by <span className="font-medium">Jan Elnas</span></h3>
+            <p className="mt-[20px]">The following are the source code of this project:</p>
+            <Link href="https://github.com/jbElmax/nextjs-blog-site" className="text-blue-500 underline">Next Js Blog Site</Link>
+            <Link href="https://github.com/jbElmax/blog-api" className="text-blue-500 underline">Express Js Blog API</Link>
+            <Link href={'https://nextjs-portfolio-jet-two.vercel.app'} className="float-right mt-[15px] ml-[180px] italic">Developed and managed by <span className="font-medium">Jan Elnas</span></Link>
         </div>
     )
 }

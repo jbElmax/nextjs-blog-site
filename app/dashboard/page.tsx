@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link';
 import { useUser } from '../context/user.context';
-import {fetchAllPostOfUser} from '../utils/api';
+import {fetchAllPostOfUser,deleteBlogPost} from '../utils/api';
 import { useEffect,useState } from 'react';
 import DashboardCard from '../components/dashboard-card/dashboard-card.component';
 import { useRouter } from 'next/navigation';
@@ -15,11 +15,12 @@ interface Blog {
 
 const Dashboard = ()=>{
     const {push} = useRouter();
-    const {user} = useUser();
+    const {user,logoutUser} = useUser();
 
     const [postBlogs, setPostBlogs] = useState<Blog[]>([]);
 
     const fetchData = async()=>{
+        
         const userId = user?._id;
         if(!userId){
             push('/auth')
@@ -33,20 +34,20 @@ const Dashboard = ()=>{
 
         fetchData();
     
-      },[])
+    },[])
+
+    const logoutHandler = ()=>{
+        logoutUser();
+        push('/auth');
+    }
 
     const deletePost = async(postId:string) =>{
         const userConfirmed = confirm("Are you sure to delete post?");
         if(userConfirmed){
             try{
-                const response =await fetch(`http://localhost:8000/api/blog/${postId}`,{
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    
-                })
-                if(response.ok){
+
+                const response = await deleteBlogPost(postId,user.token)
+                if(response.status === 200){
                     
                     alert('Post successfully deleted.')
                     fetchData();
@@ -61,7 +62,7 @@ const Dashboard = ()=>{
     return(
         <div className='lg:mt-[0px] mt-[310px] px-2'>
             <div className='flex justify-between text-gray-700'>
-                <h1 className='text-xl font-medium'>Dashboard</h1><p>Welcome back <span  className='font-medium'>{user?.username}!</span></p>
+                <h1 className='text-xl font-medium'>Dashboard</h1><p>Welcome back <span  className='font-medium'>{user?.username}!</span></p><p className='text-blue-500 hover:underline hover:cursor-pointer' onClick={logoutHandler}>Logout</p>
             </div>
               
             <div><Link href={'/new-post'} className='rounded border border-orange-400 text-gray-800 px-2 py-2 float-right mt-[15px] hover:bg-orange-200'>Create Post</Link></div>
