@@ -76,7 +76,7 @@ const Home = ()=> {
         <div className='grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-4 mt-[10px] place-items-center'>
           {allPost.map((blog) => (
 
-            <Card key={blog._id} className='lg:w-[400px] w-[350px] px-4 py-4 rounded' {...blog}/>
+            <Card key={blog._id} className='lg:w-[350px] w-[350px] px-4 py-4 rounded' {...blog}/>
 
           ))}
         </div>

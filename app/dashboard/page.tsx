@@ -5,6 +5,7 @@ import {fetchAllPostOfUser,deleteBlogPost} from '../utils/api';
 import { useEffect,useState } from 'react';
 import DashboardCard from '../components/dashboard-card/dashboard-card.component';
 import { useRouter } from 'next/navigation';
+import Loading from '../components/loading/loading';
 
 interface Blog {
     _id: string;
@@ -18,6 +19,7 @@ const Dashboard = ()=>{
     const {user,logoutUser} = useUser();
 
     const [postBlogs, setPostBlogs] = useState<Blog[]>([]);
+    const [isLoading,setIsLoading] = useState(false);
 
     const fetchData = async()=>{
         
@@ -31,9 +33,9 @@ const Dashboard = ()=>{
       };
 
     useEffect(()=>{
-
+        setIsLoading(true)
         fetchData();
-    
+        setIsLoading(false)
     },[])
 
     const logoutHandler = ()=>{
@@ -69,17 +71,21 @@ const Dashboard = ()=>{
       
             <div className='mt-[40px]'>
                 <h2 className='text-gray-700 text-lg mt-[10px] font-medium'>Your Post</h2>
-                {postBlogs.length > 0 ? (
+                {isLoading ? 
+                (<Loading/>):(
+                    postBlogs.length > 0 ? (
                     
-                    <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 place-items-center'>
-                    {postBlogs.map((blog) => (
-                        <DashboardCard key={blog._id} className='lg:w-[400px] w-[350px] px-4 py-4 rounded' blog={blog} deletePost={deletePost}/>
-                    ))}
-                    </div>
-                    ) : (
-                        <p className='text-center text-2xl font-medium mt-[15px] text-gray-600'>Loading...</p>
-                    )
-                }
+                        <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 place-items-center'>
+                        {postBlogs.map((blog) => (
+                            <DashboardCard key={blog._id} className='lg:w-[400px] w-[350px] px-4 py-4 rounded' blog={blog} deletePost={deletePost}/>
+                        ))}
+                        </div>
+                        ) : (
+                            <p className='text-center text-2xl font-medium mt-[15px] text-gray-600'>No Post yet.</p>
+                        )
+                    
+                )}
+                
             </div>
 
         </div>

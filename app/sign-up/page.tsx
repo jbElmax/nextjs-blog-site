@@ -1,9 +1,13 @@
 'use client'
-import Link from "next/link";
+
 import { FormEvent, useState } from "react";
+import { useRouter } from 'next/navigation';
+import { signUpUser } from "../utils/api";
 import Label from "../components/common-components/label/label.component";
 import Input from "../components/common-components/input/input.component";
 import Button from "../components/common-components/button/button.component";
+import Link from "next/link";
+
 
 const defaultFormFields = {
     username:'',
@@ -14,6 +18,7 @@ const defaultFormFields = {
 const SignUp = ()=>{
     const [formFields,setFormFields] = useState(defaultFormFields);
     const {username,email,password,confirmPassword} = formFields;
+    const {push} = useRouter();
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     }
@@ -26,26 +31,17 @@ const SignUp = ()=>{
         }
 
         try{
-            const response =await fetch('http://localhost:8000/auth/register',{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username,email, password }),
-            })
-            if(!response.ok){
-                if(response.status === 400){
-                    alert(await response.json());
-                }else{
-                    alert('Unable to register user this time.')
-                }
+            const response =await signUpUser(username,email,password);
+            
+            if(response.status === 200){
+                alert("You successfully registered");
+                push('/auth')
+            }else{
+                alert('Unable to register user this time.')
+                resetFormFields();
                 
-                
-                return;
             }
-            resetFormFields();
-            alert('User successfully sign-up.');
-
+                
         }catch(error){
             console.log(error);
         }

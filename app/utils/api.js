@@ -1,4 +1,5 @@
-const baseUrl = "http://localhost:8000"
+//const baseUrl = 'https://blog-api-xit6.onrender.com'
+const baseUrl = process.env.apiUrl
 const fetchData = async (apiUrl,options = {}) => {
     try {
       const response = await fetch(apiUrl,options);
@@ -114,8 +115,15 @@ export const signInUser = async(email,password)=>{
   return await fetchData(apiUrl,options);
 }
 
+export const signUpUser = async(username,email, password )=>{
+  const apiUrl = `${baseUrl}/auth/register`
+  const postData = {username,email, password}
+  const options = createPostRequst(postData,false);
+  return await fetchData(apiUrl,options);
+}
+
 export const deleteBlogPost = async(postId,token)=>{
-  const apiUrl = `http://localhost:8000/api/blog/${postId}`
+  const apiUrl = `${baseUrl}/api/blog/${postId}`
   const options = createDeleteRequest(true,token);
   return await fetchData(apiUrl,options);
 }
