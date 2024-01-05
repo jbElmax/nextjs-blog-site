@@ -9,7 +9,7 @@ const FbShareButton: React.FC<FbShareProps> = ({postId}) => {
     return(
         <>
             <FacebookShareButton
-            url={`${url}${postId}`}
+            url={`${url}post/${postId}`}
             hashtag="#CodeCraftersBlog">
             <FacebookIcon size={32} round />
             </FacebookShareButton>
