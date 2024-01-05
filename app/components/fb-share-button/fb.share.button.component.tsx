@@ -5,12 +5,12 @@ interface FbShareProps{
     postId:string
 }
 const FbShareButton: React.FC<FbShareProps> = ({postId}) => {
-    const url = process.env.baseUrl
+    const url = process.env.NEXT_PUBLIC_BASE_URL
     return(
         <>
             <FacebookShareButton
             url={`${url}${postId}`}
-            hashtag="#muo">
+            hashtag="#CodeCraftersBlog">
             <FacebookIcon size={32} round />
             </FacebookShareButton>
         </>
