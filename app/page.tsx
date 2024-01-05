@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect,useState } from 'react';
 import {fetchAllPost,fetchPostByTagName} from './utils/api';
 import Card from './components/card/card.component';
@@ -11,6 +10,7 @@ type Blog = {
   content: string;
   image:string;
 }
+
 const Home = ()=> {
   const [allPost, setAllPost] = useState<Blog[]>([]);
   const [searchTag,setSearchTag] = useState('');
@@ -23,12 +23,13 @@ const Home = ()=> {
 
   const onChangeHandler = (e:React.ChangeEvent<HTMLInputElement>)=>{
     setSearchTag(e.target.value);
-
   }
+
   const fetchData = async()=>{
-      
+    setIsLoading(true);
     const response = await fetchAllPost();
     setAllPost(response.data ?? []);
+    setIsLoading(false);
   };
 
   const onSubmitHandler = async(e:React.FormEvent)=>{
@@ -51,14 +52,11 @@ const Home = ()=> {
       setIsLoading(false);
     }
 
-
   }
 
   useEffect(()=>{
 
-    setIsLoading(true);
     fetchData();
-    setIsLoading(false);
 
   },[])
   return (
@@ -68,11 +66,13 @@ const Home = ()=> {
         <form onSubmit={onSubmitHandler}>
         <input value={searchTag} onChange={onChangeHandler} type="text" className="px-3 py-2 border-2 border-gray-200 rounded-l-full focus:outline-none focus:ring focus:ring-green-300 lg:w-[350px] w-[250px] text-base mt-[20px]" placeholder="Search by tag"/><button className='border-2 border-gray-200 rounded-r-full mt-[20px] px-3 py-2 text-gray-700 hover:bg-green-200 focus:outline-none focus:ring focus:ring-green-300' type='submit'>Search</button>
         </form>
-        </div>
+      </div>
+
       { isLoading ? (
         <Loading />
-      )
-      :allPost.length > 0 ? (
+      ):('')}
+
+      {allPost.length > 0 ? (
         <div className='grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-4 mt-[10px] place-items-center'>
           {allPost.map((blog) => (
 
@@ -80,11 +80,11 @@ const Home = ()=> {
 
           ))}
         </div>
-      ) : ( 
-        
+      ) : (    
         <p>No post found</p>
       )}
     </div>
   )
 }
+
 export default Home;
