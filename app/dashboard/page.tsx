@@ -82,7 +82,7 @@ const Dashboard = ()=>{
                     
                     <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 place-items-center'>
                         {postBlogs.map((blog) => (
-                            <DashboardCard key={blog._id} className='lg:w-[400px] w-[350px] px-4 py-4 rounded' blog={blog} deletePost={deletePost}/>
+                            <DashboardCard key={blog._id} className='lg:w-[350px] w-[350px] px-4 py-4 rounded' blog={blog} deletePost={deletePost}/>
                         ))}
                     </div>
                     ) : (
