@@ -19,23 +19,26 @@ const Dashboard = ()=>{
     const {user,logoutUser} = useUser();
 
     const [postBlogs, setPostBlogs] = useState<Blog[]>([]);
-    const [isLoading,setIsLoading] = useState(false);
-
-    const fetchData = async()=>{
+    const [isLoading,setIsLoading] = useState(true);
+    const userId = user?._id;
+    const fetchData = async(id:string)=>{
         
-        const userId = user?._id;
+        
         if(!userId){
             push('/auth')
         }
-        const data = await fetchAllPostOfUser(user._id);
+        setIsLoading(true)
+        const data = await fetchAllPostOfUser(id);
   
         setPostBlogs(data.data ?? []);
+
+        setIsLoading(false)
       };
 
     useEffect(()=>{
-        setIsLoading(true)
-        fetchData();
-        setIsLoading(false)
+        
+        fetchData(userId);
+        
     },[])
 
     const logoutHandler = ()=>{
@@ -52,7 +55,7 @@ const Dashboard = ()=>{
                 if(response.status === 200){
                     
                     alert('Post successfully deleted.')
-                    fetchData();
+                    fetchData(userId);
                 }else{
                     alert('Unable to delete the post.')
                 }
@@ -72,19 +75,21 @@ const Dashboard = ()=>{
             <div className='mt-[40px]'>
                 <h2 className='text-gray-700 text-lg mt-[10px] font-medium'>Your Post</h2>
                 {isLoading ? 
-                (<Loading/>):(
-                    postBlogs.length > 0 ? (
+                    (<Loading/>)
+                    :('')
+                }
+                {postBlogs.length > 0 ? (
                     
-                        <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 place-items-center'>
+                    <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 place-items-center'>
                         {postBlogs.map((blog) => (
                             <DashboardCard key={blog._id} className='lg:w-[400px] w-[350px] px-4 py-4 rounded' blog={blog} deletePost={deletePost}/>
                         ))}
-                        </div>
-                        ) : (
-                            <p className='text-center text-2xl font-medium mt-[15px] text-gray-600'>No Post yet.</p>
-                        )
-                    
-                )}
+                    </div>
+                    ) : (
+                        <p className='text-xl font-medium mt-[15px] text-gray-600'>No Post yet.</p>
+                    )
+                }
+                
                 
             </div>
 
