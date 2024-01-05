@@ -3,9 +3,15 @@ import { useEffect,useState,FormEvent } from "react";
 import { fetchCategories,createPost } from "../utils/api";
 import { useUser } from "../context/user.context";
 import { useRouter } from 'next/navigation';
-import CreatePost from "../components/create-post/create-post.component";
-import { Category } from "./types/newPostTypes";
-import DOMPurify from 'isomorphic-dompurify';
+//import CreatePost from "../components/create-post/create-post.component";
+import dynamic from "next/dynamic";
+
+const ClientSideComponent = dynamic(()=> import("../components/create-post/create-post.component"),{ssr:false})
+
+let DOMPurify: typeof import('isomorphic-dompurify');
+if (typeof window !== 'undefined') {
+  DOMPurify = require('isomorphic-dompurify');
+}
 const defaultFormValue = {
     title:'',
     content:'',
@@ -13,7 +19,10 @@ const defaultFormValue = {
     tagstr:'',
     category:''
 }
-
+export interface Category {
+    _id:string;
+    categoryName:string
+}
 const NewPost = ()=>{
     const [categories,setCategories] = useState<Category[]>([]);
     const [formFields,setFormFields] = useState(defaultFormValue);
@@ -28,9 +37,9 @@ const NewPost = ()=>{
     }
 
     const author = user?._id;
-    if(!author){
-        push('/dashboard');
-    }
+    // if(!author){
+    //     push('/dashboard');
+    // }
     const onChangeHandler = (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>)=>{
         const {name,value} = e.target;
 
@@ -47,6 +56,7 @@ const NewPost = ()=>{
         console.log(category);
         try{
             const sanitizeContent = DOMPurify.sanitize(content);
+            //const sanitizeContent = content;
             const postData = {title,content:sanitizeContent,image,author,category,tags,isFeatured};
             const response = await createPost(postData,user.token)
             if(!category || category ===''){
@@ -81,7 +91,17 @@ const NewPost = ()=>{
         fetchCategoryData();
     },[])
     return(
-           <CreatePost 
+        //    <CreatePost 
+        //     onChangeHandler={onChangeHandler}
+        //     onSubmitHandler={onSubmitHandler}
+        //     content = {content}
+        //     handleContentChange = {handleContentChange}
+        //     categories={categories}
+        //     isChecked={isChecked}
+        //     handleCheckboxChange={handleCheckboxChange}
+        //     formFields={formFields}
+        //    />
+        <ClientSideComponent 
             onChangeHandler={onChangeHandler}
             onSubmitHandler={onSubmitHandler}
             content = {content}
@@ -90,7 +110,7 @@ const NewPost = ()=>{
             isChecked={isChecked}
             handleCheckboxChange={handleCheckboxChange}
             formFields={formFields}
-           />
+        />
 
     )
         
