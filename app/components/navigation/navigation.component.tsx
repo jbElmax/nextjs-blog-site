@@ -8,11 +8,10 @@ import { useState } from "react";
 
 const Navigation = ()=>{
     const pathname = usePathname();
-    //const [user,setUser] = useState(null);
     const { user } = useUser();
 
     return(
-        <div className="flex lg:flex-row flex-col justify-between shadow-md py-6 bg-amber-100 place-items-center pl-[150px] pr-[150px] fixed top-0 w-full">
+        <div className="flex lg:flex-row flex-col justify-between shadow-md py-6 bg-amber-100 place-items-center pl-[50px] pr-[50px] fixed top-0 w-full">
             <div className="flex gap-x-2 place-items-center lg:flex-row flex-col">
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -23,7 +22,7 @@ const Navigation = ()=>{
 
             </div>
             <nav className="">
-                <ul className="flex lg:flex-row flex-col text-gray-700 text-lg px-2">
+                <ul className="flex lg:flex-row flex-col text-gray-700 text-lg px-2 mr-[100px]">
                     <li className="px-3">
                         <Link href="/" className={`hover:text-amber-500 ${pathname ==='/' ? 'text-amber-600 border-b-2 border-amber-200':''}`}>Home</Link>
                     </li>
@@ -44,23 +43,28 @@ const Navigation = ()=>{
                     <li className="px-3">
                         <Link href="/about-us" className={`hover:text-amber-500 ${pathname === '/about-us' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>About</Link>
                     </li>
-                    {user ? (
-                    <li className="px-3">
+
+                </ul>
+            </nav>
+            <div >
+            {user ? (
+
                         <Link href="/dashboard" className={`hover:text-amber-500 ${pathname === '/dashboard' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>
                             Dashboard
                         </Link>
-                    </li>
+         
                 ) : (
-                    <li className="px-3">
+  
 
                     <Link href = "/auth"className={`hover:text-amber-500 ${pathname === '/auth' ? 'text-amber-600 border-b-2 border-amber-200' : 'text-gray-700'}`}>
                         Sign In
                     </Link>
         
-                    </li>
+              
                 )}
-                </ul>
-            </nav>
+            </div>
+
+
         </div>
     )
 }

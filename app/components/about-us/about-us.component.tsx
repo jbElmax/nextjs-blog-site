@@ -19,7 +19,7 @@ const AboutUs = ()=>{
             <p className="mt-[20px]">The following are the source code of this project:</p>
             <Link href="https://github.com/jbElmax/nextjs-blog-site" className="text-blue-500 underline">Next Js Blog Site</Link>
             <Link href="https://github.com/jbElmax/blog-api" className="text-blue-500 underline">Express Js Blog API</Link>
-            <Link href={'https://nextjs-portfolio-jet-two.vercel.app'} className="float-right mt-[15px] ml-[180px] italic">Developed and managed by <span className="font-medium">Jan Elnas</span></Link>
+            <Link href={'https://nextjs-portfolio-jet-two.vercel.app'} className="float-right mt-[15px] ml-[180px] italic">Developed and managed by <span className="font-medium text-blue-500">Jan Elnas</span></Link>
         </div>
     )
 }
